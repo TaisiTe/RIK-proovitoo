@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends 'companies/index.html' %}
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>Osanike redigeerimine</title>
+</head>
+<body>
+{% block content %}
+    <div class="h1">Osanike lisamine ja/või muutmine</div>
+    <div class="card-body card-body-shrinking">
+        <div class="h2">Üldinfo</div>
+        <div class="row mt-2">
+            <div class="col-md-2 text-muted">Nimi</div>
+            <div class="col font-weight-bold">{{ company.name }}</div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-2 text-muted">Registrikood</div>
+            <div class="col font-weight-bold">{{ company.reg_code }}</div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-2 text-muted">Asutatud</div>
+            <div class="col font-weight-bold">{{ company.date_founded|date:'d.m.Y' }}</div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-2 text-muted">Kapital</div>
+            <div class="col font-weight-bold">{{ company.total_capital }} €</div>
+        </div>
+    </div>
+
+    {% if error_message %}
+        <div class="error-message">{{ error_message }}</div>
+    {% endif %}
+
+    <div class="h2">Osanikud</div>
+
+    <form method="post" enctype="multipart/form-data" action="">
+        {% for hidden_field in form.hidden_fields %}
+            {{ hidden_field.errors }}
+            {{ hidden_field }}
+        {% endfor %}
+
+        {% csrf_token %}
+
+        <table class="table">
+            {{ form.management_form }}
+
+            {% for form in form.forms %}
+                {% if forloop.first %}
+                    <thead>
+                    <tr>
+                        <th scope="col">Nimi</th>
+                        <th scope="col">Isikukood / registrikood</th>
+                        <th scope="col">Osakapital (€)</th>
+                        <th scope="col"></th>
+                    </tr>
+                    </thead>
+                {% endif %}
+                <tr class="{% cycle "row1" "row2" %} formset_row">
+                    {% for field in form.visible_fields %}
+                        <td>
+                            {% if forloop.first %}
+                                {% for hidden in form.hidden_fields %}
+                                    {{ hidden }}
+                                {% endfor %}
+                            {% endif %}
+                            {{ field }}
+                            {{ field.errors.as_ul }}
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+        <input type="submit" value="Salvesta"/>
+    </form>
+    <script type="text/javascript">
+        $('.formset_row').formset({
+            addText: 'Lisa osanik',
+            deleteText: 'Kustuta',
+            prefix: 'shareholder_set'
+        });
+    </script>
+{% endblock content %}
+</body>
+</html>

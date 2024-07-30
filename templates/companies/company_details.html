@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends 'companies/index.html' %}
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>Osaühingu andmed</title>
+</head>
+<body>
+{% block content %}
+    <div class="card-group row">
+        <div class="card-body">
+            <div class="h2">Üldinfo</div>
+            <div class="row mt-2">
+                <div class="col-md-2 text-muted">Nimi</div>
+                <div class="col font-weight-bold">{{ company.name }}</div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-2 text-muted">Registrikood</div>
+                <div class="col font-weight-bold">{{ company.reg_code }}</div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-2 text-muted">Asutatud</div>
+                <div class="col font-weight-bold">{{ company.date_founded|date:'d.m.Y' }}</div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-2 text-muted">Kapital</div>
+                <div class="col font-weight-bold">{{ company.total_capital }} €</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body" id="shareholders-card">
+        <div class="row">
+            <div class="h2">Osanikud</div>
+            <div class="shareholders-edit"><a href="/companies/edit/{{ company.id }}">Muuda osanikke</a></div>
+        </div>
+        <div class="data-container">
+            <table class="table table-sm">
+                <thead>
+                <tr class="border-top-0">
+                    <th class="border-bottom-0 sortable-header cursor-pointer text-nowrap" data-type='number'>Osalus
+                    </th>
+                    <th class="border-bottom-0 cursor-pointer text-nowrap">Nimi</th>
+                    <th class="border-bottom-0 cursor-pointer text-nowrap">Isikukood / registrikood</th>
+                    <th class="border-bottom-0 cursor-pointer text-nowrap">Asutaja</th>
+                    <th class="border-bottom-0"></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for shareholder in object.shareholder_set.all %}
+                    <tr class=' row_index_'{{ i }}>
+                        <td>{{ shareholder.share }} €</td>
+                        <td>{{ shareholder.name }}</td>
+                        <td>{{ shareholder.code }}</td>
+                        {% if shareholder.is_founder %}
+                            <td>Jah</td>
+                        {% else %}
+                            <td>Ei</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock content %}
+</body>
+</html>

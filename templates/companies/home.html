@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends 'companies/index.html' %}
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>Avaleht</title>
+</head>
+<body>
+{% block content %}
+    <div class="container">
+        <div class="search-form">
+            <div class="h2">Osaühingute otsing</div>
+            <form class="form-inline" action="{% url 'home' %}">
+                <input class="form-control mr-sm-3" type="search" placeholder="Nimi või registrikood"
+                       aria-label="Search"
+                       name="company">
+                <input class="form-control mr-sm-3" type="search" placeholder="Osaniku nimi või kood"
+                       aria-label="Search"
+                       name="shareholder">
+                <button class="btn btn-outline-success" type="submit">Otsing</button>
+            </form>
+        </div>
+        <div class="image">
+            <img src="{% static '/companies/images/main.jpg' %} " alt="Python developer">
+        </div>
+    </div>
+
+    {% if object_list %}
+        <div class="h2">Otsingutulemused</div>
+        <table class="table results-table">
+            <thead>
+            <tr>
+                <th>Nimi</th>
+                <th>Registrikood</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for company in object_list %}
+                <tr class="clickable "
+                    onclick="window.location='/companies/company/{{ company.reg_code }}'">
+                    <td>{{ company.name }}</td>
+                    <td>{{ company.reg_code }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+{% endblock content %}
+</body>
+</html>

@@ -1,0 +1,135 @@
+[
+  {
+    "model": "companies.company",
+    "pk": 1,
+    "fields": {
+      "name": "Viktori Saladus OÜ",
+      "reg_code": "1234567",
+      "total_capital": "5000"
+    }
+  },
+  {
+    "model": "companies.shareholder",
+    "pk": 1,
+    "fields": {
+      "name": "Taisi Telve",
+      "code": "49402124259",
+      "share": "5000",
+      "is_founder": true,
+      "company_id": 1
+    }
+  },
+  {
+    "model": "companies.company",
+    "pk": 2,
+    "fields": {
+      "name": "OÜ EKRE",
+      "reg_code": "7654321",
+      "total_capital": "2500"
+    }
+  },
+  {
+    "model": "companies.shareholder",
+    "pk": 2,
+    "fields": {
+      "name": "Martin Helme",
+      "code": "12345678910",
+      "share": "1",
+      "is_founder": true,
+      "company_id": 2
+    }
+  },
+  {
+    "model": "companies.shareholder",
+    "pk": 3,
+    "fields": {
+      "name": "Mart Helme",
+      "code": "12345678911",
+      "share": "2499",
+      "is_founder": true,
+      "company_id": 2
+    }
+  },
+  {
+    "model": "companies.company",
+    "pk": 3,
+    "fields": {
+      "name": "Vikatimees OÜ",
+      "reg_code": "6666666",
+      "total_capital": "100000"
+    }
+  },
+  {
+    "model": "companies.shareholder",
+    "pk": 4,
+    "fields": {
+      "name": "Taisi Telve",
+      "code": "49402124259",
+      "share": "50000",
+      "is_founder": true,
+      "company_id": 3
+    }
+  },
+  {
+    "model": "companies.shareholder",
+    "pk": 5,
+    "fields": {
+      "name": "OÜ Piku",
+      "code": "1212121",
+      "share": "50000",
+      "is_founder": true,
+      "company_id": 3
+    }
+  },
+  {
+    "model": "companies.company",
+    "pk": 4,
+    "fields": {
+      "name": "OÜ KPT",
+      "reg_code": "1223344",
+      "total_capital": "4000"
+    }
+  },
+  {
+    "model": "companies.shareholder",
+    "pk": 6,
+    "fields": {
+      "name": "Kristjan Sirge",
+      "code": "12356789123",
+      "share": "4000",
+      "is_founder": true,
+      "company_id": 4
+    }
+  },
+  {
+    "model": "companies.company",
+    "pk": 5,
+    "fields": {
+      "name": "OÜ Heal Lapsel Mitu Nime",
+      "reg_code": "8877665",
+      "total_capital": "2500"
+    }
+  },
+  {
+    "model": "companies.shareholder",
+    "pk": 7,
+    "fields": {
+      "name": "Kristjan Kütaru",
+      "code": "1234",
+      "share": "1500",
+      "is_founder": true,
+      "company_id": 5
+    }
+  },
+  {
+    "model": "companies.shareholder",
+    "pk": 8,
+    "fields": {
+      "name": "Detsibell",
+      "code": "66778899",
+      "share": "1000",
+      "is_founder": true,
+      "company_id": 5
+    }
+  }
+]
