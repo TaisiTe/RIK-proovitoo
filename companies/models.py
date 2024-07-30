@@ -1,4 +1,4 @@
-from datetime import datetime, date
+from datetime import date
 
 from django.core.validators import MinValueValidator, MaxValueValidator, MinLengthValidator, MaxLengthValidator
 from django.core.exceptions import ValidationError
