@@ -23,6 +23,7 @@
                     <img src="{% static '/companies/images/create.jpg' %} " alt="Python developer">
                 </div>
             </div>
+            {# TODO: lisada isiku otsimise võimalus osanike lisamise vormile #}
             <div class="h2">Osanikud</div>
             {% if error_message %}
                 <div class="error-message">{{ error_message }}</div>
@@ -52,13 +53,11 @@
                         {% endfor %}
                     </tr>
                 {% endfor %}
-                </table>
+            </table>
             <button class="btn btn-outline-success" type="submit">Salvesta</button>
         </form>
     </div>
-
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script src="{% static 'companies/jquery.companies.js' %}"></script>
+    
     <script type="text/javascript">
         $('.formset_row').formset({
             addText: 'Lisa osanik',

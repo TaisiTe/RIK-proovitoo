@@ -1,17 +1,12 @@
-import pytest
-
-from companies.models import Company
-
-pytestmark = pytest.mark.django_db
+from django.test import TestCase
+from .models import Company, Shareholder
 
 
-class TestCompanyModel:
+class CompanyTest(TestCase):
+    def setUp(self):
+        self.company = Company.objects.create(name='Test Company', reg_code='7654321', total_capital=2500)
 
-    def test_save_company(self):
-        company = Company.objects.create(
-            name='Viktori Saladus OÜ',
-            reg_code='1234567',
-            total_capital=2500
-        )
-        assert company.name == 'Viktori Saladus OÜ'
-        assert company.total_capital == 2500
+    def test_company_creation(self):
+        self.assertEqual(self.company.name, 'Test Company')
+        self.assertEqual(self.company.reg_code, '7654321')
+        self.assertEqual(self.company.total_capital, 2500)
