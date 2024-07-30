@@ -53,4 +53,10 @@ For using Django admin please first set username and password using:
 
 Then access the admin at localhost:8000/admin
 
-Happy exploring!
+### Running tests
+
+To run unittests use:
+
+    $ python3 manage.py test
+
+TODO: Add code coverage checks and more automated tests.

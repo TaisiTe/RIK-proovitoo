@@ -3,6 +3,7 @@ from datetime import datetime, date
 from django.core.validators import MinValueValidator, MaxValueValidator, MinLengthValidator, MaxLengthValidator
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.utils import timezone
 
 
 def only_int(value):
@@ -29,7 +30,7 @@ class Company(models.Model):
     total_capital = models.IntegerField(null=False,
                                         validators=[MinValueValidator(2500, 'Kogukapitali suurus '
                                                                             'peab olema vähemalt 2500€.')])
-    date_created = models.DateTimeField(editable=False, default=datetime.now())
+    date_created = models.DateTimeField(editable=False, default=timezone.now)
 
     class Meta:
         verbose_name_plural = "companies"
@@ -47,7 +48,7 @@ class Shareholder(models.Model):
                                 validators=[MinValueValidator(1,
                                                               'Osakapitali suurus peab olema vähemalt 1€.')])
     is_founder = models.BooleanField(default=False)
-    date_created = models.DateTimeField(editable=False, default=datetime.now())
+    date_created = models.DateTimeField(editable=False, default=timezone.now)
 
     def __str__(self):
         return self.name
