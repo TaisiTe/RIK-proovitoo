@@ -16,14 +16,14 @@ class CompanySearchView(ListView):
         company = self.request.GET.get('company')
         shareholder = self.request.GET.get('shareholder')
         object_list = ''
-        if company:
+        if company:  # otsing osaühingu parameetrite järgi
             object_list = Company.objects.filter(
                 Q(name__icontains=company.strip()) | Q(reg_code__icontains=company.strip()))
-        if shareholder:
+        if shareholder:  # otsing osanike parameetrite järgi
             shareholders = (Shareholder.objects.filter(
                 Q(name__icontains=shareholder.strip()) | Q(code__icontains=shareholder.strip()))
                             .values_list('company_id'))
-            if company:
+            if company:  # otsing mõlema lahtri järgi
                 object_list = object_list.filter(Q(id__in=shareholders))
             else:
                 object_list = Company.objects.filter(Q(id__in=shareholders))
@@ -56,16 +56,16 @@ class CompanyCreateView(CreateView):
         shareholders = context['shareholders']
         with transaction.atomic():
             if form.is_valid():
-                self.object = form.save(commit=False)
+                self.object = form.save(commit=False)  # enne osanike valideerimist ei salvesta
                 if shareholders.is_valid():
                     shareholders.instance = self.object
                     total_capital = 0
                     for shareholder in shareholders:
-                        shareholder.instance.is_founder = True
-                        if shareholder.cleaned_data:
-                            if not shareholder.cleaned_data['DELETE']:
+                        shareholder.instance.is_founder = True  # firma asutamisel märgime osanikud asutajateks
+                        if shareholder.cleaned_data:  # kui rida on tühi
+                            if not shareholder.cleaned_data.get('DELETE'):  # kui rida on kustutatud
                                 total_capital += shareholder.instance.share
-                    if total_capital == self.object.total_capital:
+                    if total_capital == self.object.total_capital:  # kas kogukapital võrdub osakapitalide summaga
                         self.object = form.save()
                         shareholders.save()
                         return redirect('/companies/company/' + self.object.reg_code)
@@ -80,7 +80,7 @@ class CompanyCreateView(CreateView):
 
 
 class CompanyUpdateView(UpdateView):
-    """ Osaühingu osanike muutmise/lisamise vaade """
+    """ Osaühingu osanike muutmise/lisamise vaade. Loogika on sarnane asutamise vormiga ja ilmselt vajab ühildamist. """
     template_name = 'companies/edit_shareholders.html'
     model = Company
     form_class = ShareholderFormSet
@@ -97,7 +97,7 @@ class CompanyUpdateView(UpdateView):
                         if not shareholder.cleaned_data['DELETE']:
                             total_capital += shareholder.instance.share
                 if total_capital >= 2500:
-                    self.object.total_capital = total_capital
+                    self.object.total_capital = total_capital  # uuendame kogukapitali uute osanike kapitalide summaga
                     self.object.save()
                     shareholders.instance = self.object
                     shareholders.save()
